@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import os
-from flask import Flask, abort, request, jsonity, make_response
+from flask import Flask, abort, request, jsonify, make_response
 
 
 app = Flask(__name__)
