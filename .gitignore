@@ -5,5 +5,7 @@
 # Ignore workspace
 todo-flask.sublime-workspace
 
-# Ignore virtual environment
+# Ignore virtual environment (you can use symlinks for Python 2/3)
 venv
+venv2
+venv3
