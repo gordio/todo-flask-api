@@ -1,0 +1,9 @@
+# Basic trash
+*.pyc
+
+
+# Ignore workspace
+todo-flask.sublime-workspace
+
+# Ignore virtual environment
+venv
