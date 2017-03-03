@@ -51,5 +51,19 @@ def update_task(task_id):
     return jsonify({'task': task[0]})
 
 
+@app.route('/api/v1.0/tasks', methods=['POST'])
+def create_task():
+    if not request.json or not "title" in request.json:
+        abort(400)
+
+    task = {
+        'id': tasks[-1]['id'] + 1,
+        'title': request.json['title'],
+        'done': False,
+    }
+    tasks.append(task)
+    return jsonify({'task': task}), 201
+
+
 if __name__ == '__main__':
     app.run(debug=os.getenv('DEBUG', False))
