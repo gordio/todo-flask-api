@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import os
-from flask import Flask, jsonity, make_response
+from flask import Flask, abort, request, jsonity, make_response
 
 
 app = Flask(__name__)
@@ -22,6 +22,11 @@ def not_found(error):
     return make_response(jsonify({'error': 'Not Found'}), 404)
 
 
+@app.errorhandler(400)
+def not_found(error):
+    return make_response(jsonify({'error': 'Bad Request'}), 400)
+
+
 @app.route('/api/v1.0/tasks', methods=['GET'])
 def get_tasks():
     return jsonify({'tasks': tasks})
@@ -33,6 +38,17 @@ def get_task(task_id):
     if len(task) == 0:
         abort(404)
     return jsonify({'task': task})
+
+
+@app.route('/api/v1.0/task/<int:task_id>', methods=['PUT'])
+def update_task(task_id):
+    task = [t for t in tasks if t['id'] == task_id]
+    if len(task) == 0 or not request.json or not 'title' in request.json:
+        abort(400)
+
+    task[0]['title'] = request.json.get('title', task[0]['title'])
+    task[0]['done'] = request.json.get('done', task[0]['done'])
+    return jsonify({'task': task[0]})
 
 
 if __name__ == '__main__':
